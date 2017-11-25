@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Inventory Home</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load  static %}
+    <link href="{% static 'inventory/css/style.css' %}" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="/new/manufacturer">New Manufacturer</a></li>
+          <li><a href="/new/products">New Product</a></li>
+          <li><a href="/">Home</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <h4>Hello Inventory Home</h4>
+
+    <form action="/orders" method="POST">
+      {% csrf_token %}
+      <label for="">
+        User Name:
+        <input type="text" name="username">
+      </label>
+      <select name="product_1">
+        <option></option>
+        {% for product in products %}
+          <option value="{{product.id}}">{{product.name}}</option>
+        {% endfor %}
+      </select>
+      
+      <select name="product_2" id="">
+        <option></option>        
+        {% for product in products %}
+          <option value="{{product.id}}">{{product.name}}</option>
+        {% endfor %}
+      </select>
+
+      <select name="product_3" id="">
+        <option></option>
+        {% for product in products %}
+          <option value="{{product.id}}">{{product.name}}</option>
+        {% endfor %}
+      </select>
+
+      <button type="submit">Make Order!</button>
+    </form>
+
+    <h4>List Of Products</h4>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Stock</th>
+          <th>Retail Price</th>
+          <th>Unit Price</th>
+          <th>Manufacturer Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in products %}
+        <tr>
+          <td>{{product.name}}</td>
+          <td>{{product.stock}}</td>
+          <td>{{product.retail_price}}</td>
+          <td>{{product.unit_price}}</td>
+          <td>{{product.manufacturer.name}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    
+    <h4>List of Orders</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>User Name</th>
+          <th>Total Price</th>
+          <th>Product 1</th>
+          <th>Product 2</th>
+          <th>Product 3</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in orders %}
+        <tr>
+          <td>{{order.username}}</td>
+          <td>{{order.total}}</td>
+          <td>{{order.products.all.0.name}}</td>
+          <td>{{order.products.all.1.name}}</td>
+          <td>{{order.products.all.2.name}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>

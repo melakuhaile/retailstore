@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>New Product</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load  static %}
+    <link href="{% static 'inventory/css/style.css' %}" rel="stylesheet">
+  </head>
+  <body>
+      <header>
+          <nav>
+            <ul>
+              <li><a href="/new/manufacturer">New Manufacturer</a></li>
+              <li><a href="/new/products">New Product</a></li>
+              <li><a href="/">Home</a></li>
+            </ul>
+          </nav>
+        </header>
+    <h2>New Product</h2>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form action="/products" method="POST">
+      {% csrf_token %}
+
+      <label for="">
+        Name:
+        <input type="text" name="name">
+      </label>
+      
+      <label for="">
+        Retail Price:
+        <input type="text" name="retail_price">
+      </label>
+
+      <label for="">
+          Stock:
+          <input type="number" name="stock">
+        </label>
+      
+      <label for="">
+        Manufacturer:
+        <select name="manufacturer" id="">
+          {% for manu in manufacturers %}
+          <option value="{{manu.id}}">{{manu.name}}</option>
+          {% endfor %}
+        </select>
+      </label>
+
+      <label for="">
+        Unit Price:
+        <input type="text" name="unit_price">
+      </label>
+
+      <button type="submit">Create Product</button>
+    </form>
+  </body>
+</html>

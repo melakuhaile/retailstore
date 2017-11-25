@@ -1,0 +1,29 @@
+* {
+    font-family: sans-serif;
+  }
+  
+  form {
+    width: 50%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  form > label {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+  }
+  
+  form > button {
+    align-self: center;
+  }
+  
+  .error {
+    background: rgba(163, 30, 39, 0.8);
+    color: white;
+  }
+  
+  td {
+    margin: 0 auto;
+  }
